@@ -1,7 +1,7 @@
 # linear reggresion for n*m
 import numpy as np
 
-def h(weights, inputs):
+def hypothesis(weights, inputs):
     ''' 
      h(w) = w^T * X 
      w = (W_0; w_1; w_2 ; w_3 ; ... ;w_n) 
@@ -22,7 +22,6 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
     row_size = inputs.shape[0]
     column_size = inputs.shape[1]
 
-    print(row_size)
 
     #Learning Process 
     for example_index in range(row_size):
@@ -30,8 +29,8 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
         #Calculating cost function term for x[i]
         sigma_term = 0  
         for i in range(row_size):
-            sigma_term += float(h(weights, inputs[i]) - values[i])
-        print(sigma_term)
+            sigma_term += float(hypothesis(weights, inputs[i]) - values[i])
+
         DJDW =  learning_rate*sigma_term/row_size
         
         #print(DJDW)
@@ -42,12 +41,16 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
 
     return weights
 
-X = np.matrix([1,2104,5,1,45,1,1416,3,2,40,1,1534,3,2,30,1,852,2,1,36]).reshape(4,5)
-Y = np.matrix([460,232,315,178]).reshape(4,1)
-W = np.matrix([1, 10, 5, 2.5,1]) 
-A = 0.01
 
 
+def dummy_dataset():
+    X = np.matrix([1,2104,5,1,45,1,1416,3,2,40,1,1534,3,2,30,1,852,2,1,36]).reshape(4,5)
+    Y = np.matrix([460,232,315,178]).reshape(4,1)
+    W = np.matrix([1, 10, 5, 2.5,1]) 
+    A = 0.01
+    gradient_descent(W, X, Y, A)
 
-#print(W * X[0].transpose()) 
-gradient_descent(W, X, Y, A)
+if __name__ == '__main__':
+    dummy_dataset()
+
+    
