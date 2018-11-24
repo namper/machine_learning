@@ -22,18 +22,32 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
     row_size = inputs.shape[0]
     column_size = inputs.shape[1]
 
+    print(row_size)
+
     #Learning Process 
-    for example_index in range(column_size):
+    for example_index in range(row_size):
 
         #Calculating cost function term for x[i]
         sigma_term = 0  
         for i in range(row_size):
-            sigma_term += h(weights, inputs[i]) - values[i]
+            sigma_term += int(h(weights, inputs[i]) - values[i])
+        print(sigma_term)
         DJDW =  learning_rate*float(sigma_term)/row_size
-
-
+        
+        #print(DJDW)
+        
         #Updating weight
-        for weight_index in range(row_size):
-            weights[weight_index] = weights[weight_index] - DJDW * inputs[example_index][weight_index]
+        for weight_index in range(column_size):
+            weights[0,weight_index] = weights[0, weight_index]  - DJDW * inputs[example_index, weight_index ]
 
     return weights
+
+X = np.matrix([1,2104,5,1,45,1,1416,3,2,40,1,1534,3,2,30,1,852,2,1,36]).reshape(4,5)
+Y = np.matrix([460,232,315,178]).reshape(4,1)
+W = np.matrix([1, 10, 5, 2.5,1]) 
+A = 0.01
+
+
+
+#print(W * X[0].transpose()) 
+gradient_descent(W, X, Y, A)
