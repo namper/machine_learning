@@ -30,9 +30,9 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
         #Calculating cost function term for x[i]
         sigma_term = 0  
         for i in range(row_size):
-            sigma_term += int(h(weights, inputs[i]) - values[i])
+            sigma_term += float(h(weights, inputs[i]) - values[i])
         print(sigma_term)
-        DJDW =  learning_rate*float(sigma_term)/row_size
+        DJDW =  learning_rate*sigma_term/row_size
         
         #print(DJDW)
         
