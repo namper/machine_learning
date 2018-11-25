@@ -44,13 +44,23 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
 
 
 def dummy_dataset():
-    X = np.matrix([1,2104,5,1,45,1,1416,3,2,40,1,1534,3,2,30,1,852,2,1,36]).reshape(4,5)
-    Y = np.matrix([460,232,315,178]).reshape(4,1)
-    W = np.matrix([1, 10, 5, 2.5,1]) 
-    A = 0.01
-    gradient_descent(W, X, Y, A)
+
+    W = np.matrix([3, 4])
+    X = np.matrix([1,10, 1, 20]).reshape(2,2)
+    Y = np.matrix([43, 83]).reshape(2,1)
+    A = 0.00001
+    
+    W = gradient_descent(W, X, Y, A)
+
+    xtrain = np.matrix([1, 30]).reshape(2,1)
+    
+    assert(float(W * xtrain)) == 123
+    print(float(W * xtrain))
 
 if __name__ == '__main__':
     dummy_dataset()
+
+
+
 
     
