@@ -4,22 +4,30 @@ import matplotlib.pyplot as plt
 
 
 def hypothesis(weights, inputs):
-    ''' 
-     h(w) = w^T * X 
-     w = (W_0; w_1; w_2 ; w_3 ; ... ;w_n) 
-     x = (1; x_1; x_2; x_3; ... ; x_n) 
-
-    '''
-    # apppend column(1,1,...,1) to inputs
+    """ 
+    h(w) = w^T * X 
+    w = (W_0; w_1; w_2 ; w_3 ; ... ;w_n) 
+    x = (1; x_1; x_2; x_3; ... ; x_n) 
+    """
     return weights * inputs.transpose()
 
-
+def optimized_term(weights, X, Y, ChainX, M):
+    """
+    J(w) = 1/(M) * Sigma{i=1}{m} (h(x^(i)) - y(i)) * x(i)(j)
+    """
+    result = 0 
+    for example_index in range(M):
+        result += (hypothesis(weights, X[example_index]) - Y[example_index])*ChainX
+    return result/M
 
 def gradient_descent(weight_input, inputs, values, learning_rate):
-    ''' J(w) = 1/(2M) * Sigma{i=1}{m} (h(x^(i)) - y(i))^2
-    repeat{ w_i := w_i - alpha * d/d(w_1)J(w_1) }
-    n+1
-    '''
+    """
+    repeat{
+     w_i := w_i - alpha * d/d(w_1)J(w_1) 
+     ...
+     }
+    """
+
     weights = weight_input
     row_size = inputs.shape[0]
     column_size = inputs.shape[1]
@@ -30,12 +38,8 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
 
         #Updating weights
         for weight_index in range(column_size):
-            differentiated_term = 0
-            
-            differentiated_term += ((hypothesis(weights, inputs[example_index]) - values[example_index]) * \
-            inputs[example_index, weight_index])
-            
-            weights[0,weight_index] = weights[0, weight_index]  - learning_rate * differentiated_term
+            weights[0,weight_index] = weights[0, weight_index]  - \
+            learning_rate * optimized_term(weights, inputs, values, inputs[example_index, weight_index], column_size)
 
     return weights
 
@@ -43,7 +47,7 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
 
 def dummy_dataset():
 
-    W = np.matrix([20, 20])
+    W = np.matrix([100, 100])
     x = list()
     y = list()
     for i in range(1000):
