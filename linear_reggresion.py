@@ -2,6 +2,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+LINEAR REGGRESION | ASSUMING INPUTS AS ROW MATRICES 
+
+
+
+------------------------------------------------------------------------------------------------
+In case of input being Column Matries Hypothesis function will be changed from wx^T to w^T x
+------------------------------------------------------------------------------------------------
+"""
+
 
 def hypothesis(weights, inputs):
     """ 
@@ -16,8 +26,8 @@ def optimized_term(weights, X, Y, ChainX, M):
     J(w) = 1/(M) * Sigma{i=1}{m} (h(x^(i)) - y(i)) * x(i)(j)
     """
     result = 0 
-    for example_index in range(M):
-        result += (hypothesis(weights, X[example_index]) - Y[example_index])*ChainX
+    for row_index in range(M):
+        result += (hypothesis(weights, X[row_index]) - Y[row_index])*ChainX
     return result/M
 
 def gradient_descent(weight_input, inputs, values, learning_rate):
@@ -34,61 +44,11 @@ def gradient_descent(weight_input, inputs, values, learning_rate):
 
 
     #Learning Process 
-    for example_index in range(row_size):
+    for row_index in range(row_size):
 
         #Updating weights
-        for weight_index in range(column_size):
-            weights[0,weight_index] = weights[0, weight_index]  - \
-            learning_rate * optimized_term(weights, inputs, values, inputs[example_index, weight_index], column_size)
+        for column_index in range(column_size):
+            weights[0,column_index] = weights[0, column_index]  - \
+            learning_rate * optimized_term(weights, inputs, values, inputs[row_index, column_index], column_size)
 
     return weights
-
-
-
-def dummy_dataset():
-
-    W = np.matrix([100, 100])
-    x = list()
-    y = list()
-    for i in range(1000):
-        x.append(1)
-        x.append(i)
-        y.append(i*4 + 3)
-
-    _length = len(x)//2
-    X = np.matrix(x).reshape(_length,2)
-    Y = np.matrix(y).reshape(_length,1)
-    A = 0.00000001
-    
-
-
-    W = gradient_descent(W, X, Y, A)
-    xtrain = np.matrix([1, 30]).reshape(2,1)
-    
-    guess = float(W * xtrain)
-    assert(guess - 123) <= 1
-    print(guess)
-
-    
-    x = [i for i in range(1000)]
-    plt.plot(np.array(x), np.array(y))
-    plt.plot(30,guess, 'X')
-    plt.show()
-
-
-def dummy_bigdataset():
-    
-    X = np.matrix([1,2104,5,1,45,1,1416,3,2,40,1,1534,3,2,30,1,852,2,1,36]).reshape(4,5)
-    Y = np.matrix([460,232,315,178]).reshape(4,1)
-    W = np.matrix([1, 10, 5, 2.5,1]) 
-    A = 0.000001
-
-    W = gradient_descent(W, X, Y, A)
-    xtrain = np.matrix([1,852,2,1,36]).reshape(5,1)
-
-    print(float(W * xtrain))
-
-
-
-if __name__ == '__main__':
-    dummy_dataset()
