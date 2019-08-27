@@ -1,6 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
 """
 LINEAR REGRESSION | ASSUMING INPUTS AS ROW MATRICES | nxm | 
 
