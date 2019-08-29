@@ -21,6 +21,7 @@ def perceptron_trains(data: np.array, max_iter: int):
     bias = 0
 
     for i in range(max_iter):
+        data = np.random.permutation(data)
         for x, y in data:
             a = weights.dot(x) + bias
             if not a * y > 0:
