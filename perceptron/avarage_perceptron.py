@@ -26,6 +26,7 @@ def average_perceptron_train(data: np.array, max_iter: int) -> tuple:
     u, b = weights, bias
     c = 1
     for _ in range(max_iter):
+        data = np.random.permutation(data)
         for x, y in data:
             if not y * (weights.dot(x) + bias) > 0:
                 weights += y * x
